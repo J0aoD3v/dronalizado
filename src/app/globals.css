@@ -98,13 +98,17 @@ a.button:focus {
 ======================= */
 .card {
   display: flex;
-  align-items: center; /* centraliza verticalmente todo o conteúdo do card */
+  align-items: center;
+  justify-content: center; /* centraliza horizontalmente todo o conteúdo do card */
   background: rgba(23, 23, 23, 0.85);
   color: var(--accent-color);
   padding: 1.5rem;
   border-radius: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 1rem 5rem;
+  margin: 1rem auto; /* centraliza horizontalmente na página */
+  width: 1000px; /* largura fixa, ajuste conforme desejar */
+  min-width: 500px;
+  gap: 2rem; /* espaço entre ícone e conteúdo */
 }
 
 .card-icon {
@@ -113,19 +117,17 @@ a.button:focus {
   justify-content: center;
   font-size: 6rem;
   color: var(--accent-color);
-  width: 8rem; /* largura fixa do ícone */
-  min-width: 8rem;
-  margin-right: 2rem;
-  flex-shrink: 0; /* não encolhe */
+  width: 100px; /* largura fixa do ícone */
+  height: 100px; /* altura fixa para manter proporção */
+  flex-shrink: 0;
 }
 
 .card-content {
   display: flex;
-  flex-direction: column; /* mantém título e descrição empilhados */
-  justify-content: center; /* centraliza verticalmente dentro do card-content */
+  flex-direction: column;
+  justify-content: center; /* centraliza verticalmente */
   align-items: center; /* centraliza horizontalmente */
-  text-align: center; /* garante que o texto fique centralizado */
-  flex: 1; /* ocupa todo espaço restante do card */
+  text-align: center; /* texto centralizado */
 }
 
 .card-title {
