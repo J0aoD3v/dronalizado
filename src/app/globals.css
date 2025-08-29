@@ -153,6 +153,60 @@ a.button:focus {
 }
 
 /* =======================
+   Hero Section
+======================= */
+.hero-title {
+  font-size: 4rem;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.7rem;
+  }
+}
+
+/* =======================
+   MainForm Section
+======================= */
+.mainform-title {
+  font-size: 2.5rem;
+  line-height: 1.15;
+  color: var(--accent-color); /* dourado */
+}
+
+.mainform-paragraph {
+  font-size: 1.4rem;
+  color: var(--secondary-color); /* dourado ou branco */
+}
+
+@media (max-width: 768px) {
+  .mainform-title {
+    font-size: 1.7rem;
+  }
+  .mainform-paragraph {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainform-title {
+    font-size: 1.2rem;
+  }
+  .mainform-paragraph {
+    font-size: 1rem;
+  }
+}
+
+/* =======================
    Responsividade
 ======================= */
 @media (max-width: 768px) {
@@ -198,5 +252,90 @@ a.button:focus {
   }
   .card-description {
     font-size: 1.2rem;
+  }
+}
+
+/* =======================
+   Footer Section
+======================= */
+.footer {
+  background: #222;
+  color: var(--accent-color);
+  padding: 2.5rem 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.footer p {
+  color: var(--accent-color);
+  margin: 0.2rem 0;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.footer .footer-contact p {
+  font-size: 2rem;
+  color: #fff;
+}
+
+.footer .text-sm {
+  font-size: 1.1rem;
+}
+
+@media (min-width: 768px) {
+  .footer-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+  }
+  .footer p {
+    font-size: 1.15rem;
+  }
+  .footer .text-sm {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-content {
+    gap: 1rem;
+    padding: 0;
+  }
+  .footer p,
+  .footer .text-sm {
+    font-size: 0.95rem;
+  }
+}
+
+/* =======================
+   CTA Section
+======================= */
+.cta-btn-text {
+  font-size: 2.7rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .cta-btn-text {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta-btn-text {
+    font-size: 1.05rem;
   }
 }
