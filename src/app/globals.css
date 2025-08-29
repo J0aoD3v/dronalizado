@@ -1,0 +1,265 @@
+
+
+@import url("https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100&display=swap");
+/* CTASection texto do botão menor */
+.cta-btn-text {
+  font-size: 2.7rem;
+}
+/* CTASection título maior */
+.cta-title {
+  font-size: 2rem;
+}
+/* CTASection parágrafo menor */
+.cta-desc {
+  font-size: 1.5rem;
+  color: #fff;
+}
+/* CTASection botão texto menor */
+.cta-btn-small {
+  font-size: 2.5rem;
+}
+/* MainForm título maior */
+.mainform-title {
+  font-size: 3rem;
+}
+/* MainForm parágrafo menor */
+.mainform-paragraph {
+  font-size: 2rem;
+}
+/* SolutionSection título maior */
+.solution-title {
+  font-size: 2.7rem;
+}
+/* ProblemSection título maior */
+.problem-title {
+  font-size: 3rem;
+}
+/* ProblemSection parágrafos menores */
+.problem-paragraph {
+  font-size: 1.5rem;
+}
+/* Hero Section custom font sizes */
+.hero-title {
+  font-size: 3.5rem;
+}
+.hero-desc {
+  font-size: 2rem;
+}
+/* Botão CTA grande */
+.cta-btn {
+  padding-left: 8rem;
+  padding-right: 8rem;
+  font-size: 5rem;
+}
+
+/* Estilo para os ícones */
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+  font-size: inherit; /* Permite que o tamanho seja herdado */
+  display: inline-block; /* Garante que o ícone seja exibido corretamente */
+  line-height: 1; /* Remove espaçamento vertical extra */
+}
+
+/* Estilos globais que serão aplicados em toda a aplicação */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definições de variáveis globais */
+:root {
+  --primary-color: #ffd700; /* Dourado */
+  --secondary-color: #ffffff;
+  --accent-color: #ffd700; /* Dourado */
+  --text-color: #ffd700; /* Dourado */
+  --background-color: #171717;
+  --hero-bg-image: url("/images/drone-hero.jpg");
+  --background: linear-gradient(135deg, #171717 0%, #222 40%);
+  --foreground: #ffd700; /* Dourado */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ffffff;
+  }
+}
+
+/* Aplicando a fonte Onest e peso bold */
+body {
+  font-family: "Onest", Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  background: var(--background);
+  color: var(--foreground);
+  line-height: 1.4;
+}
+
+/* Títulos dourados */
+h1,
+h2,
+h3 {
+  color: var(--accent-color);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  font-size: 2rem;
+  color: var(--secondary-color);
+  margin: 0;
+  margin-left: 8rem;
+  margin-right: 8rem;
+  margin-bottom: 1rem;
+}
+
+/* Estilo global para botões */
+button,
+a.button {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: #171717;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  border-radius: 1rem; /* Bordas arredondadas */
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover,
+a.button:hover {
+  background-color: #bfa100;
+  transform: scale(1.1); /* Crescimento no hover */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Sombra no hover */
+}
+
+button:focus,
+a.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.5); /* Destaque no foco */
+}
+
+/* Estilo para os cards */
+.card {
+  display: flex;
+  align-items: center;
+  background: rgba(23, 23, 23, 0.85);
+  color: var(--accent-color);
+  padding: 1.5rem;
+  border-radius: 1rem; /* Bordas arredondadas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  margin: 1rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
+}
+
+.card-icon {
+  display: flex; /* Torna o ícone um contêiner flex */
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: center; /* Centraliza horizontalmente (opcional) */
+  font-size: 6rem; /* Ícone maior */
+  color: var(--accent-color); /* Cor do ícone */
+  margin-right: 3rem; /* Espaçamento entre ícone e texto */
+  margin-left: 2rem;
+}
+
+.card-content {
+  display: flex; /* Torna o conteúdo um contêiner flex */
+  flex-direction: column; /* Organiza o texto em duas divisões */
+  align-items: center; /* Centraliza o texto horizontalmente */
+  justify-content: center; /* Centraliza o texto verticalmente */
+  text-align: center; /* Garante que o texto fique centralizado */
+}
+
+.card-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--accent-color); /* Cor do título */
+  margin-bottom: 0.5rem; /* Espaçamento entre título e descrição */
+  margin-top: 0;
+}
+
+.card-description,
+.card-content p {
+  color: #fff !important; /* Texto branco */
+}
+
+/* Estilo para listas */
+li {
+  color: #fff; /* Texto branco */
+}
+
+li .material-symbols-outlined {
+  color: var(--accent-color) !important; /* Ícone dourado */
+  font-size: 2.5rem !important; /* Ícone maior */
+  vertical-align: middle;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  p {
+    font-size: 1.5rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+
+  button,
+  a.button {
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .card {
+    flex-direction: column; /* Coloca os cards em coluna */
+    align-items: flex-start; /* Alinha o conteúdo à esquerda */
+  }
+
+  .card-icon {
+    margin-bottom: 1rem; /* Espaçamento abaixo do ícone */
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  button,
+  a.button {
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .card {
+    padding: 1rem; /* Menos padding nos cards */
+  }
+
+  .card-title {
+    font-size: 1.5rem; /* Tamanho da fonte do título */
+  }
+
+  .card-description {
+    font-size: 1.2rem; /* Tamanho da fonte da descrição */
+  }
+}
