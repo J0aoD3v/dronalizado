@@ -1,4 +1,5 @@
 // src/app/page.tsx
+"use client";
 import React, { useState } from "react";
 import HeroSection from "@/components/HeroSection";
 import ProblemSection from "@/components/ProblemSection";
