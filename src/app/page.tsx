@@ -17,7 +17,11 @@ export default function Home() {
       <ProblemSection />
       <SolutionSection />
       <ValuePropositionSection />
-      {showForm && <MainForm />}
+      {showForm && (
+        <div className="mx-auto my-12 max-w-xl bg-white rounded-lg shadow-lg p-6">
+          <MainForm />
+        </div>
+      )}
       <CTASection />
       <Footer />
     </main>
