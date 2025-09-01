@@ -141,6 +141,34 @@ a.button:focus {
   color: #fff !important;
 }
 
+@media (max-width: 1024px) {
+  .card {
+    max-width: 90%; /* ocupa quase toda a tela */
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column; /* ícone em cima do texto */
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .card-icon {
+    font-size: 3rem;
+    width: 60px;
+    height: 60px;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+  }
+
+  .card-description {
+    font-size: 0.95rem;
+  }
+}
+
 /* =======================
    Material Icons
 ======================= */
@@ -245,13 +273,22 @@ a.button:focus {
     padding: 0.6rem 1rem;
   }
   .card {
-    padding: 1rem;
+    padding: 0.5rem;
+    min-width: 0;
+    width: 98vw;
+    max-width: 100%;
+    gap: 0.5rem;
   }
   .card-title {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
   }
   .card-description {
-    font-size: 1.2rem;
+    font-size: 0.95rem;
+  }
+  .card-icon {
+    font-size: 2rem;
+    width: 40px;
+    height: 40px;
   }
 }
 
@@ -287,6 +324,8 @@ a.button:focus {
 .footer .footer-contact p {
   font-size: 2rem;
   color: #fff;
+  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 .footer .text-sm {
@@ -316,6 +355,12 @@ a.button:focus {
   .footer p,
   .footer .text-sm {
     font-size: 0.95rem;
+  }
+  .footer .footer-contact p {
+    font-size: 1.1rem;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    max-width: 95vw;
   }
 }
 
