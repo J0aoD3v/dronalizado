@@ -22,10 +22,14 @@ const HeroSection = ({ onClickForm }: { onClickForm?: () => void }) => {
           o SEU potencial.
         </p>
         <a
-          href="#"
+          href="#form-section"
           className="button"
           onClick={(e) => {
             e.preventDefault();
+            const formSection = document.getElementById("form-section");
+            if (formSection) {
+              formSection.scrollIntoView({ behavior: "smooth" });
+            }
             if (onClickForm) {
               onClickForm();
             }

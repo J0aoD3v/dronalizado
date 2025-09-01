@@ -1,8 +1,10 @@
 // src/components/MainForm.tsx
-import React from "react";
+import React, { useState } from "react";
 
 const MainForm = () => {
-  const googleFormUrl = process.env.NEXT_PUBLIC_GOOGLE_FORMS_URL;
+  // URL do Google Forms fornecido diretamente
+  const googleFormUrl =
+    "https://docs.google.com/forms/d/e/1FAIpQLSeZm_d27v4u3Heuex_jNhPoQ6FE8c1wxcmBjbVBe27c-banpg/viewform?usp=header";
 
   const title = googleFormUrl
     ? "Transforme Seu Negócio: Cadastre-se!"
@@ -12,30 +14,65 @@ const MainForm = () => {
     ? "Seja um dos primeiros a experimentar o mapeamento Otimizado. Deixe seus dados e entraremos em contato para um projeto piloto com desconto especial."
     : "Em breve, você poderá se cadastrar aqui. Por enquanto, entre em contato pelo email ou telefone para mais informações.";
 
+  const [showForm, setShowForm] = useState(false);
+
   return (
-    <section id="form-section" className="py-20 bg-green-50 text-center">
-      <div className="max-w-3xl mx-auto px-4">
-        <h2 className="mainform-title font-bold text-green-700 mb-6">
-          {title}
-        </h2>
-        <p className="mainform-paragraph text-gray-700 mb-8">{description}</p>
-        <div className="bg-white p-8 rounded-xl shadow-lg">
-          {googleFormUrl ? (
-            <iframe
-              src={googleFormUrl}
-              width="100%"
-              height="800"
-              frameBorder="0"
-              marginHeight={0}
-              marginWidth={0}
-              title="Formulário Dronalizado"
+    <section id="form-section" className="mainform-section">
+      <div className="mainform-container">
+        <h2 className="mainform-title">{title}</h2>
+        <p className="mainform-paragraph">{description}</p>
+        {!showForm && (
+          <button
+            className="mainform-open-btn"
+            onClick={() => setShowForm(true)}
+          >
+            Abrir Formulário
+          </button>
+        )}
+        {showForm && (
+          <div className="mainform-box" style={{ position: "relative" }}>
+            <button
+              className="mainform-close-btn"
+              onClick={() => setShowForm(false)}
+              aria-label="Fechar formulário"
+              style={{
+                position: "absolute",
+                top: 12,
+                right: 12,
+                background: "#dc2626",
+                color: "#fff",
+                border: "none",
+                borderRadius: 6,
+                width: 36,
+                height: 36,
+                fontSize: 24,
+                fontWeight: "bold",
+                cursor: "pointer",
+                zIndex: 10,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+              }}
             >
-              Carregando formulário...
-            </iframe>
-          ) : (
-            <p>Configuração de formulário pendente.</p>
-          )}
-        </div>
+              ×
+            </button>
+            {googleFormUrl ? (
+              <div className="mainform-iframe-wrapper">
+                <iframe
+                  src={googleFormUrl}
+                  title="Formulário Dronalizado"
+                  className="mainform-iframe"
+                  allowFullScreen
+                >
+                  Carregando formulário...
+                </iframe>
+              </div>
+            ) : (
+              <p>Configuração de formulário pendente.</p>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );
