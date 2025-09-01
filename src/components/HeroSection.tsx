@@ -26,7 +26,9 @@ const HeroSection = ({ onClickForm }: { onClickForm?: () => void }) => {
           className="button"
           onClick={(e) => {
             e.preventDefault();
-            onClickForm && onClickForm();
+            if (onClickForm) {
+              onClickForm();
+            }
           }}
         >
           Quer Saber Mais? Clique Aqui!
