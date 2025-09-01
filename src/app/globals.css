@@ -339,3 +339,34 @@ a.button:focus {
     font-size: 1.05rem;
   }
 }
+
+/* =======================
+   Border Cut
+======================= */
+.border-cut {
+  position: relative;
+  overflow: hidden;
+}
+
+.border-cut::before,
+.border-cut::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background: #fff;
+  z-index: 20;
+}
+
+.border-cut::before {
+  left: -20px;
+  border-radius: 0 16px 16px 0;
+  box-shadow: 8px 0 16px -8px rgba(0, 0, 0, 0.08);
+}
+
+.border-cut::after {
+  right: -20px;
+  border-radius: 16px 0 0 16px;
+  box-shadow: -8px 0 16px -8px rgba(0, 0, 0, 0.08);
+}

@@ -19,7 +19,7 @@ export default function Home() {
       <SolutionSection />
       <ValuePropositionSection />
       {showForm && (
-        <div className="mx-auto my-12 max-w-xl bg-white rounded-lg shadow-lg p-6">
+        <div className="mx-auto my-12 max-w-xl bg-white rounded-lg shadow-lg p-6 relative border-cut">
           <MainForm />
         </div>
       )}
