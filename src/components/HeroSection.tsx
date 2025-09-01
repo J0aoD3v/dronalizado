@@ -2,7 +2,7 @@
 
 import React from "react";
 
-const HeroSection = () => {
+const HeroSection = ({ onClickForm }: { onClickForm?: () => void }) => {
   return (
     <section className="relative h-screen flex items-center justify-center text-center bg-cover bg-center bg-[url('/images/11.jpg')]">
       {/* Overlay escuro */}
@@ -21,7 +21,14 @@ const HeroSection = () => {
           Serviços inteligentes de mapeamento para otimizar seu tempo. Descubra
           o SEU potencial.
         </p>
-        <a href="#form-section" className="button">
+        <a
+          href="#"
+          className="button"
+          onClick={(e) => {
+            e.preventDefault();
+            onClickForm && onClickForm();
+          }}
+        >
           Quer Saber Mais? Clique Aqui!
         </a>
       </div>
