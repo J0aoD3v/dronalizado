@@ -1,23 +1,34 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/database";
+import { database } from "@/lib/mongodb";
 
 export async function GET() {
   try {
-    const qrCodes = await db.all(`
-      SELECT 
-        qc.*,
-        COUNT(qs.id) as scan_count,
-        COUNT(DISTINCT qs.ip_address) as unique_visitors
-      FROM qr_codes qc
-      LEFT JOIN qr_scans qs ON qc.qr_id = qs.qr_id
-      WHERE qc.is_active = 1
-      GROUP BY qc.id
-      ORDER BY qc.created_at DESC
-    `);
+    const qrCodes = await database.getAllQRCodes();
+
+    // Para cada QR code, buscar estatísticas de scan
+    const qrCodesWithStats = await Promise.all(
+      qrCodes.map(async (qr) => {
+        const scans = await database
+          .getQRScansCollection()
+          .find({
+            qr_id: qr.id,
+          })
+          .toArray();
+
+        const uniqueVisitors = new Set(scans.map((scan) => scan.ip_address))
+          .size;
+
+        return {
+          ...qr,
+          scan_count: qr.scan_count || scans.length,
+          unique_visitors: uniqueVisitors,
+        };
+      })
+    );
 
     return NextResponse.json({
       success: true,
-      data: qrCodes,
+      data: qrCodesWithStats,
     });
   } catch (error) {
     console.error("Erro ao buscar QR codes:", error);

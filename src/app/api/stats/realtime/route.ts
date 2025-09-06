@@ -1,23 +1,32 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/database";
+import { database } from "@/lib/mongodb";
 
 export async function GET() {
   try {
-    const [totalScans, todayScans, uniqueVisitors, activeQRCodes] =
-      await Promise.all([
-        db.get("SELECT COUNT(*) as count FROM qr_scans"),
-        db.get(
-          'SELECT COUNT(*) as count FROM qr_scans WHERE DATE(timestamp) = DATE("now")'
-        ),
-        db.get("SELECT COUNT(DISTINCT ip_address) as count FROM qr_scans"),
-        db.get("SELECT COUNT(*) as count FROM qr_codes WHERE is_active = 1"),
-      ]);
+    await database.updateStats();
+    const stats = await database.getStats();
+
+    const uniqueVisitors = await database
+      .getQRScansCollection()
+      .aggregate([
+        {
+          $group: {
+            _id: "$ip_address",
+          },
+        },
+        {
+          $count: "count",
+        },
+      ])
+      .toArray();
+
+    const uniqueCount = uniqueVisitors.length > 0 ? uniqueVisitors[0].count : 0;
 
     return NextResponse.json({
-      totalScans: totalScans?.count || 0,
-      todayScans: todayScans?.count || 0,
-      uniqueVisitors: uniqueVisitors?.count || 0,
-      activeQRCodes: activeQRCodes?.count || 0,
+      totalScans: stats?.total_scans || 0,
+      todayScans: stats?.today_scans || 0,
+      uniqueVisitors: uniqueCount,
+      activeQRCodes: stats?.total_qr_codes || 0,
     });
   } catch (error) {
     console.error("Erro ao buscar estatísticas:", error);

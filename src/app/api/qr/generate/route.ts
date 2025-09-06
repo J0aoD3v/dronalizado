@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import QRCode from "qrcode";
-import { db } from "@/lib/database";
+import { v4 as uuidv4 } from "uuid";
+import { database } from "@/lib/mongodb";
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,10 +15,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Verificar se já existe QR para esta URL
-    const existingQr = await db.get(
-      "SELECT * FROM qr_codes WHERE url = ? AND is_active = 1 ORDER BY created_at DESC LIMIT 1",
-      [url]
-    );
+    const existingQr = await database.getQRCodesCollection().findOne({
+      url: url,
+    });
 
     if (existingQr) {
       const qrCodeDataURL = await QRCode.toDataURL(url, {
@@ -28,16 +28,16 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json({
         success: true,
-        qrId: existingQr.qr_id,
+        qrId: existingQr.id,
         qrCodeDataURL,
         url: existingQr.url,
-        name: existingQr.name,
+        name: existingQr.data,
         existing: true,
       });
     }
 
     // Criar novo QR code
-    const qrId = `qr_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const qrId = uuidv4();
 
     const qrCodeDataURL = await QRCode.toDataURL(url, {
       width: 300,
@@ -45,11 +45,16 @@ export async function POST(request: NextRequest) {
       color: { dark: "#000000", light: "#FFFFFF" },
     });
 
-    await db.run("INSERT INTO qr_codes (name, url, qr_id) VALUES (?, ?, ?)", [
-      name,
+    const qrCode = {
+      id: qrId,
       url,
-      qrId,
-    ]);
+      data: name,
+      image: qrCodeDataURL,
+      created_at: new Date(),
+      scan_count: 0,
+    };
+
+    await database.createQRCode(qrCode);
 
     return NextResponse.json({
       success: true,

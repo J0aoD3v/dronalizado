@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/database";
+import { database } from "@/lib/mongodb";
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,10 +10,9 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "URL é obrigatória" }, { status: 400 });
     }
 
-    const qrCode = await db.get(
-      "SELECT * FROM qr_codes WHERE url = ? AND is_active = 1 ORDER BY created_at DESC LIMIT 1",
-      [url]
-    );
+    const qrCode = await database.getQRCodesCollection().findOne({
+      url: url,
+    });
 
     if (!qrCode) {
       return NextResponse.json(

@@ -1,22 +1,51 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/database";
+import { database } from "@/lib/mongodb";
 
 export async function GET() {
   try {
-    const dailyStats = await db.all(`
-      SELECT 
-        DATE(timestamp) as date,
-        COUNT(*) as total_scans,
-        COUNT(DISTINCT ip_address) as unique_visitors
-      FROM qr_scans 
-      WHERE timestamp >= DATE('now', '-30 days')
-      GROUP BY DATE(timestamp)
-      ORDER BY DATE(timestamp) DESC
-    `);
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const dailyStats = await database
+      .getQRScansCollection()
+      .aggregate([
+        {
+          $match: {
+            scanned_at: { $gte: thirtyDaysAgo },
+          },
+        },
+        {
+          $group: {
+            _id: {
+              $dateToString: {
+                format: "%Y-%m-%d",
+                date: "$scanned_at",
+              },
+            },
+            total_scans: { $sum: 1 },
+            unique_visitors: { $addToSet: "$ip_address" },
+          },
+        },
+        {
+          $project: {
+            date: "$_id",
+            total_scans: 1,
+            unique_visitors: { $size: "$unique_visitors" },
+          },
+        },
+        {
+          $sort: { date: -1 },
+        },
+      ])
+      .toArray();
 
     return NextResponse.json({
       success: true,
-      data: dailyStats,
+      data: dailyStats.map((stat) => ({
+        date: stat.date,
+        total_scans: stat.total_scans,
+        unique_visitors: stat.unique_visitors,
+      })),
     });
   } catch (error) {
     console.error("Erro ao buscar estatísticas diárias:", error);
