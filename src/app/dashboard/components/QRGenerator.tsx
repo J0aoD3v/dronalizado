@@ -115,6 +115,7 @@ export default function QRGenerator({ onQRGenerated }: QRGeneratorProps) {
       {qrCode && (
         <div className={styles.qrResult}>
           <h3>QR Code Gerado:</h3>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={qrCode} alt="QR Code" className={styles.qrImage} />
           <button onClick={handleDownload} className={styles.downloadBtn}>
             📥 Download

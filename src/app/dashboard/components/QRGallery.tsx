@@ -84,11 +84,14 @@ export default function QRGallery({ qrCodes }: QRGalleryProps) {
           {qrCodes.map((qr) => (
             <div key={qr.id} className={styles.qrCard}>
               {qrImages[qr.qr_id] && (
-                <img
-                  src={qrImages[qr.qr_id]}
-                  alt={`QR Code ${qr.name}`}
-                  className={styles.qrCardImage}
-                />
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={qrImages[qr.qr_id]}
+                    alt={`QR Code ${qr.name}`}
+                    className={styles.qrCardImage}
+                  />
+                </>
               )}
 
               <h3>{qr.name}</h3>
@@ -130,6 +133,7 @@ export default function QRGallery({ qrCodes }: QRGalleryProps) {
           >
             {qrImages[selectedQR.qr_id] && (
               <div style={{ textAlign: "center", marginBottom: "20px" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={qrImages[selectedQR.qr_id]}
                   alt={`QR Code ${selectedQR.name}`}

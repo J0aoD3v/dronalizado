@@ -3,9 +3,18 @@ import { promisify } from "util";
 
 class Database {
   private db: sqlite3.Database;
-  public get: any;
-  public all: any;
-  public run: any;
+  public get: (
+    sql: string,
+    params?: (string | number)[]
+  ) => Promise<Record<string, unknown> | undefined>;
+  public all: (
+    sql: string,
+    params?: (string | number)[]
+  ) => Promise<Record<string, unknown>[]>;
+  public run: (
+    sql: string,
+    params?: (string | number)[]
+  ) => Promise<sqlite3.RunResult>;
 
   constructor() {
     this.db = new sqlite3.Database("dronalizado.db");
