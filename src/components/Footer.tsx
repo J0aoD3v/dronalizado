@@ -10,7 +10,7 @@ const Footer = () => {
       <div className="footer-content">
         <div>
           <p className="mt-4 text-sm" style={{ fontSize: "1.6rem" }}>
-            © {currentYear} DRONALIZADO. Todos os direitos reservados.
+            ©{currentYear} DRONALIZADO. Todos os direitos reservados.
           </p>
           <div
             className="footer-contact text-sm space-y-1"
