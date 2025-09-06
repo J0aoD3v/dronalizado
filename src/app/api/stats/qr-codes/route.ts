@@ -5,7 +5,7 @@ export async function GET() {
   try {
     // Garantir conexão com o database
     await database.connect();
-    
+
     console.log("Buscando QR codes...");
     const qrCodes = await database.getAllQRCodes();
     console.log(`Encontrados ${qrCodes.length} QR codes`);
@@ -40,7 +40,10 @@ export async function GET() {
       })
     );
 
-    console.log("QR codes com estatísticas processados:", qrCodesWithStats.length);
+    console.log(
+      "QR codes com estatísticas processados:",
+      qrCodesWithStats.length
+    );
 
     return NextResponse.json({
       success: true,
@@ -49,10 +52,10 @@ export async function GET() {
   } catch (error) {
     console.error("Erro ao buscar QR codes:", error);
     return NextResponse.json(
-      { 
+      {
         success: false,
         error: "Erro interno do servidor",
-        data: []
+        data: [],
       },
       { status: 500 }
     );

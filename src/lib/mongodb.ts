@@ -67,10 +67,10 @@ class MongoDatabase {
       console.log("🔗 Tentando conectar ao MongoDB...");
       client = new MongoClient(uri);
       await client.connect();
-      
+
       // Testar a conexão
       await client.db("admin").command({ ping: 1 });
-      
+
       db = client.db(dbName);
 
       // Criar índices para melhor performance
@@ -87,7 +87,7 @@ class MongoDatabase {
 
   async isConnected(): Promise<boolean> {
     if (!this.connected || !client) return false;
-    
+
     try {
       await client.db("admin").command({ ping: 1 });
       return true;

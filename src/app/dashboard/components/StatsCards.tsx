@@ -58,7 +58,9 @@ export default function StatsCards({ stats }: StatsCardsProps) {
           <div className={styles.statContent}>
             <h3>{card.title}</h3>
             <p className={styles.statValue}>
-              {typeof card.value === 'number' ? card.value.toLocaleString() : '0'}
+              {typeof card.value === "number"
+                ? card.value.toLocaleString()
+                : "0"}
             </p>
           </div>
         </div>

@@ -5,7 +5,7 @@ export async function GET() {
   try {
     // Tentar conectar ao database
     await database.connect();
-    
+
     // Atualizar estatísticas
     await database.updateStats();
     const stats = await database.getStats();
@@ -44,7 +44,7 @@ export async function GET() {
     return NextResponse.json(response);
   } catch (error) {
     console.error("Erro ao buscar estatísticas:", error);
-    
+
     // Retornar dados padrão em caso de erro
     return NextResponse.json({
       totalScans: 0,

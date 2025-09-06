@@ -29,11 +29,11 @@ export default function DashboardPage() {
   const loadDashboardData = async () => {
     try {
       setIsLoading(true);
-      
+
       // Carregar estatísticas
       console.log("Carregando estatísticas...");
       const statsResponse = await fetch("/api/stats/realtime");
-      
+
       if (statsResponse.ok) {
         const statsData = await statsResponse.json();
         console.log("Estatísticas carregadas:", statsData);
@@ -52,7 +52,7 @@ export default function DashboardPage() {
       // Carregar QR codes
       console.log("Carregando QR codes...");
       const qrResponse = await fetch("/api/stats/qr-codes");
-      
+
       if (qrResponse.ok) {
         const qrData = await qrResponse.json();
         console.log("QR codes carregados:", qrData);
@@ -61,7 +61,6 @@ export default function DashboardPage() {
         console.error("Erro ao carregar QR codes:", qrResponse.status);
         setQrCodes([]);
       }
-
     } catch (error) {
       console.error("Erro ao carregar dados:", error);
       // Definir valores padrão em caso de erro

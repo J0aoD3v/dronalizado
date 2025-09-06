@@ -3,6 +3,11 @@ import { database } from "@/lib/mongodb";
 
 export async function GET() {
   try {
+    // Garantir conexão com o database
+    await database.connect();
+    
+    console.log("Buscando estatísticas diárias...");
+    
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
@@ -39,18 +44,24 @@ export async function GET() {
       ])
       .toArray();
 
+    console.log(`Encontradas ${dailyStats.length} estatísticas diárias`);
+
     return NextResponse.json({
       success: true,
       data: dailyStats.map((stat) => ({
         date: stat.date,
-        total_scans: stat.total_scans,
-        unique_visitors: stat.unique_visitors,
+        total_scans: stat.total_scans || 0,
+        unique_visitors: stat.unique_visitors || 0,
       })),
     });
   } catch (error) {
     console.error("Erro ao buscar estatísticas diárias:", error);
     return NextResponse.json(
-      { error: "Erro interno do servidor" },
+      { 
+        success: false,
+        error: "Erro interno do servidor",
+        data: []
+      },
       { status: 500 }
     );
   }
