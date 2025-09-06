@@ -24,19 +24,17 @@ export async function checkRateLimit(
     windowStart.setHours(windowStart.getHours() - config.windowHours);
 
     // Contar requisições do IP na janela de tempo
-    const requestCount = await database
-      .getQRScansCollection()
-      .countDocuments({
-        ip_address: ip,
-        scanned_at: { $gte: windowStart },
-      });
+    const requestCount = await database.getQRScansCollection().countDocuments({
+      ip_address: ip,
+      scanned_at: { $gte: windowStart },
+    });
 
     // Calcular tempo de reset (próxima janela)
-    const resetTime = Date.now() + (config.windowHours * 60 * 60 * 1000);
-    
+    const resetTime = Date.now() + config.windowHours * 60 * 60 * 1000;
+
     // Calcular requisições restantes
     const remaining = Math.max(0, config.maxRequests - requestCount);
-    
+
     return {
       allowed: requestCount < config.maxRequests,
       remaining,
@@ -49,13 +47,16 @@ export async function checkRateLimit(
     return {
       allowed: true,
       remaining: config.maxRequests,
-      resetTime: Date.now() + (config.windowHours * 60 * 60 * 1000),
+      resetTime: Date.now() + config.windowHours * 60 * 60 * 1000,
       total: 0,
     };
   }
 }
 
-export function getRateLimitHeaders(result: RateLimitResult, maxRequests: number) {
+export function getRateLimitHeaders(
+  result: RateLimitResult,
+  maxRequests: number
+) {
   return {
     "X-RateLimit-Limit": maxRequests.toString(),
     "X-RateLimit-Remaining": result.remaining.toString(),

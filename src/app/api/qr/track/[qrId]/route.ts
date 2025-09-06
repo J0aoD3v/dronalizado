@@ -23,24 +23,27 @@ export async function GET(
 
     // Rate Limiting: Verificar se o IP excedeu o limite
     const rateLimitResult = await checkRateLimit(ip);
-    
-    console.log(`IP ${ip} - Requisições: ${rateLimitResult.total}/100, Restantes: ${rateLimitResult.remaining}`);
+
+    console.log(
+      `IP ${ip} - Requisições: ${rateLimitResult.total}/100, Restantes: ${rateLimitResult.remaining}`
+    );
 
     if (!rateLimitResult.allowed) {
       console.log(`Rate limit excedido para IP: ${ip}`);
       return NextResponse.json(
-        { 
-          error: "Rate limit excedido. Máximo de 100 acessos por IP a cada 24 horas.",
+        {
+          error:
+            "Rate limit excedido. Máximo de 100 acessos por IP a cada 24 horas.",
           retryAfter: "24 hours",
           remaining: rateLimitResult.remaining,
-          resetTime: new Date(rateLimitResult.resetTime).toISOString()
+          resetTime: new Date(rateLimitResult.resetTime).toISOString(),
         },
-        { 
+        {
           status: 429,
           headers: {
             "Retry-After": "86400", // 24 horas em segundos
-            ...getRateLimitHeaders(rateLimitResult, 100)
-          }
+            ...getRateLimitHeaders(rateLimitResult, 100),
+          },
         }
       );
     }
@@ -76,11 +79,11 @@ export async function GET(
 
     // Adicionar headers de rate limit na resposta de sucesso
     const response = NextResponse.redirect(qrCode.url);
-    
+
     // Recalcular rate limit após registrar o scan
     const updatedRateLimit = await checkRateLimit(ip);
     const headers = getRateLimitHeaders(updatedRateLimit, 100);
-    
+
     Object.entries(headers).forEach(([key, value]) => {
       response.headers.set(key, value);
     });
