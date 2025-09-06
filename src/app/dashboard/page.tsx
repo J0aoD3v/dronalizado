@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import StatsCards from "./components/StatsCards";
-import QRGenerator from "./components/QRGenerator";
-import QRGallery from "./components/QRGallery";
-import ChartsSection from "./components/ChartsSection";
-import RealTimeUpdates from "./components/RealTimeUpdates";
+import {
+  StatsCards,
+  QRGenerator,
+  QRGallery,
+  ChartsSection,
+  RealTimeUpdates,
+} from "./components";
 import styles from "./styles/dashboard.module.css";
 
 interface DashboardStats {

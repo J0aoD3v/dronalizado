@@ -23,10 +23,10 @@ export async function GET(
     );
 
     // Buscar URL do QR code
-    const qrCode = await db.get(
+    const qrCode = (await db.get(
       "SELECT url FROM qr_codes WHERE qr_id = ? AND is_active = 1",
       [qrId]
-    ) as { url: string } | undefined;
+    )) as { url: string } | undefined;
 
     if (!qrCode) {
       return NextResponse.json(
