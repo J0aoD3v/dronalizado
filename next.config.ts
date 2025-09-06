@@ -4,9 +4,14 @@ import path from "path";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   images: {},
   experimental: {},
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 const config = {

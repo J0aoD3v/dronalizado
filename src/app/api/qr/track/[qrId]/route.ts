@@ -3,10 +3,10 @@ import { db } from "@/lib/database";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { qrId: string } }
+  { params }: { params: Promise<{ qrId: string }> }
 ) {
   try {
-    const { qrId } = params;
+    const { qrId } = await params;
 
     // Extrair informações da requisição
     const ip =
@@ -26,7 +26,7 @@ export async function GET(
     const qrCode = await db.get(
       "SELECT url FROM qr_codes WHERE qr_id = ? AND is_active = 1",
       [qrId]
-    );
+    ) as { url: string } | undefined;
 
     if (!qrCode) {
       return NextResponse.json(
