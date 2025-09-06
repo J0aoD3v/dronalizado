@@ -32,6 +32,14 @@ export interface QRStats {
   updated_at: Date;
 }
 
+export interface DashboardData {
+  _id?: string;
+  user_id?: string;
+  settings?: Record<string, unknown>;
+  created_at: Date;
+  updated_at: Date;
+}
+
 class MongoDatabase {
   private static instance: MongoDatabase;
   private connected: boolean = false;
@@ -50,7 +58,7 @@ class MongoDatabase {
 
     try {
       const uri = process.env.MONGODB_URI;
-      const dbName = process.env.DATABASE_NAME || "qr_dashboard";
+      const dbName = process.env.DATABASE_NAME || "dronalizado";
 
       if (!uri) {
         throw new Error("MONGODB_URI não encontrada nas variáveis de ambiente");
@@ -64,7 +72,7 @@ class MongoDatabase {
       await this.createIndexes();
 
       this.connected = true;
-      console.log("✅ Conectado ao MongoDB");
+      console.log("✅ Conectado ao MongoDB - Database:", dbName);
     } catch (error) {
       console.error("❌ Erro ao conectar no MongoDB:", error);
       throw error;
@@ -95,15 +103,23 @@ class MongoDatabase {
   }
 
   getQRCodesCollection(): Collection<QRCode> {
-    return db.collection<QRCode>("qr_codes");
+    const collectionName = process.env.COLLECTION_QR_CODES || "qr_codes";
+    return db.collection<QRCode>(collectionName);
   }
 
   getQRScansCollection(): Collection<QRScan> {
-    return db.collection<QRScan>("qr_scans");
+    const collectionName = process.env.COLLECTION_QR_SCANS || "qr_scans";
+    return db.collection<QRScan>(collectionName);
   }
 
   getQRStatsCollection(): Collection<QRStats> {
-    return db.collection<QRStats>("qr_stats");
+    const collectionName = process.env.COLLECTION_QR_STATS || "qr_stats";
+    return db.collection<QRStats>(collectionName);
+  }
+
+  getDashboardCollection(): Collection<DashboardData> {
+    const collectionName = process.env.COLLECTION_DASHBOARD || "qr_dashboard";
+    return db.collection<DashboardData>(collectionName);
   }
 
   // Métodos para QR Codes
