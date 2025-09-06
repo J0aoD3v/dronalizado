@@ -5,9 +5,9 @@ export async function GET() {
   try {
     // Garantir conexão com o database
     await database.connect();
-    
+
     console.log("Buscando estatísticas por hora...");
-    
+
     const twentyFourHoursAgo = new Date();
     twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
 
@@ -57,10 +57,10 @@ export async function GET() {
   } catch (error) {
     console.error("Erro ao buscar estatísticas por hora:", error);
     return NextResponse.json(
-      { 
+      {
         success: false,
         error: "Erro interno do servidor",
-        data: []
+        data: [],
       },
       { status: 500 }
     );

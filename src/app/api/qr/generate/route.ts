@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
   try {
     // Garantir conexão com o database
     await database.connect();
-    
+
     const { name, url } = await request.json();
 
     if (!name || !url) {
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
     if (existingQr) {
       console.log("QR code já existe:", existingQr.id);
-      
+
       const qrCodeDataURL = await QRCode.toDataURL(url, {
         width: 300,
         margin: 2,
@@ -76,9 +76,9 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Erro ao gerar QR code:", error);
     return NextResponse.json(
-      { 
+      {
         success: false,
-        error: "Erro interno do servidor" 
+        error: "Erro interno do servidor",
       },
       { status: 500 }
     );

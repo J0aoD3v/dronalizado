@@ -5,9 +5,9 @@ export async function GET() {
   try {
     // Garantir conexão com o database
     await database.connect();
-    
+
     console.log("Buscando estatísticas diárias...");
-    
+
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
@@ -57,10 +57,10 @@ export async function GET() {
   } catch (error) {
     console.error("Erro ao buscar estatísticas diárias:", error);
     return NextResponse.json(
-      { 
+      {
         success: false,
         error: "Erro interno do servidor",
-        data: []
+        data: [],
       },
       { status: 500 }
     );

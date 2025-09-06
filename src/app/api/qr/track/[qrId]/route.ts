@@ -9,7 +9,7 @@ export async function GET(
   try {
     // Garantir conexão com o database
     await database.connect();
-    
+
     const { qrId } = await params;
     console.log("Rastreando QR code:", qrId);
 

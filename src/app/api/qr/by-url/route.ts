@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
   try {
     // Garantir conexão com o database
     await database.connect();
-    
+
     const searchParams = request.nextUrl.searchParams;
     const url = searchParams.get("url");
 
@@ -36,9 +36,9 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Erro ao buscar QR code:", error);
     return NextResponse.json(
-      { 
+      {
         success: false,
-        error: "Erro interno do servidor" 
+        error: "Erro interno do servidor",
       },
       { status: 500 }
     );
