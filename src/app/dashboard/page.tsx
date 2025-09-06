@@ -1,28 +1,67 @@
-// src/app/dashboard/page.tsx
-import React from "react";
+"use client";
 
-export const metadata = {
-  title: "Dashboard | Dronalizado",
-};
+import { useEffect, useState } from "react";
+import StatsCards from "./components/StatsCards";
+import QRGenerator from "./components/QRGenerator";
+import QRGallery from "./components/QRGallery";
+import ChartsSection from "./components/ChartsSection";
+import RealTimeUpdates from "./components/RealTimeUpdates";
+import styles from "./styles/dashboard.module.css";
+
+interface DashboardStats {
+  totalScans: number;
+  todayScans: number;
+  uniqueVisitors: number;
+  activeQRCodes: number;
+}
 
 export default function DashboardPage() {
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [qrCodes, setQrCodes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    loadDashboardData();
+  }, []);
+
+  const loadDashboardData = async () => {
+    try {
+      // Carregar estatísticas
+      const statsResponse = await fetch("/api/stats/realtime");
+      const statsData = await statsResponse.json();
+      setStats(statsData);
+
+      // Carregar QR codes
+      const qrResponse = await fetch("/api/stats/qr-codes");
+      const qrData = await qrResponse.json();
+      setQrCodes(qrData.data || []);
+
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Erro ao carregar dados:", error);
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return <div className={styles.loading}>Carregando dashboard...</div>;
+  }
+
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "#f9fafb",
-        color: "#111827",
-        padding: 24,
-      }}
-    >
-      <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 12 }}>
-        Dashboard
-      </h1>
-      <p style={{ opacity: 0.7 }}>Blank page — content coming soon.</p>
-    </main>
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <h1>Dashboard Dronalizado</h1>
+        <p>Analytics e Gerenciamento de QR Codes</p>
+      </header>
+
+      <RealTimeUpdates onStatsUpdate={setStats} />
+
+      <main className={styles.main}>
+        <StatsCards stats={stats} />
+        <QRGenerator onQRGenerated={loadDashboardData} />
+        <ChartsSection />
+        <QRGallery qrCodes={qrCodes} />
+      </main>
+    </div>
   );
 }
