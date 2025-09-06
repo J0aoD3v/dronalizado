@@ -26,6 +26,8 @@ export async function GET() {
 
           return {
             ...qr,
+            qr_id: qr.id, // Mapear o campo id para qr_id
+            name: qr.data, // Mapear o campo data para name
             scan_count: qr.scan_count || scans.length,
             unique_visitors: uniqueVisitors,
           };
@@ -33,6 +35,8 @@ export async function GET() {
           console.warn(`Erro ao buscar scans para QR ${qr.id}:`, scanError);
           return {
             ...qr,
+            qr_id: qr.id, // Mapear o campo id para qr_id
+            name: qr.data, // Mapear o campo data para name
             scan_count: qr.scan_count || 0,
             unique_visitors: 0,
           };

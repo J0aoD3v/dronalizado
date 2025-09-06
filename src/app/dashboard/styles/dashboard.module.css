@@ -336,6 +336,27 @@
   background: #3182ce;
 }
 
+.deleteBtn {
+  background: #e53e3e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.deleteBtn:hover {
+  background: #c53030;
+}
+
+.deleteBtn:disabled {
+  background: #cbd5e0;
+  cursor: not-allowed;
+}
+
 .viewBtn {
   background: #ed8936;
   color: white;

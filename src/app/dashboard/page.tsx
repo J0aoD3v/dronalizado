@@ -93,7 +93,7 @@ export default function DashboardPage() {
         <StatsCards stats={stats} />
         <QRGenerator onQRGenerated={loadDashboardData} />
         <ChartsSection />
-        <QRGallery qrCodes={qrCodes} />
+        <QRGallery qrCodes={qrCodes} onQRDeleted={loadDashboardData} />
       </main>
     </div>
   );

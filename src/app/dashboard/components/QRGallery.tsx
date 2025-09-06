@@ -17,11 +17,13 @@ interface QRCodeItem {
 
 interface QRGalleryProps {
   qrCodes: QRCodeItem[];
+  onQRDeleted?: () => void;
 }
 
-export default function QRGallery({ qrCodes }: QRGalleryProps) {
+export default function QRGallery({ qrCodes, onQRDeleted }: QRGalleryProps) {
   const [selectedQR, setSelectedQR] = useState<QRCodeItem | null>(null);
   const [qrImages, setQrImages] = useState<{ [key: string]: string }>({});
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     // Gerar imagens dos QR codes
@@ -69,6 +71,44 @@ export default function QRGallery({ qrCodes }: QRGalleryProps) {
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     alert("URL copiada para a área de transferência!");
+  };
+
+  const deleteQRCode = async (qrId: string) => {
+    if (
+      !confirm(
+        "Tem certeza que deseja deletar este QR Code? Esta ação não pode ser desfeita."
+      )
+    ) {
+      return;
+    }
+
+    setIsDeleting(true);
+    try {
+      const response = await fetch("/api/qr/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ qrId }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("QR Code deletado com sucesso!");
+        setSelectedQR(null);
+        if (onQRDeleted) {
+          onQRDeleted(); // Recarregar a lista de QR codes
+        }
+      } else {
+        alert("Erro ao deletar QR Code: " + data.error);
+      }
+    } catch (error) {
+      alert("Erro ao conectar com o servidor.");
+      console.error("Erro:", error);
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   return (
@@ -179,6 +219,13 @@ export default function QRGallery({ qrCodes }: QRGalleryProps) {
                 className={styles.copyBtn}
               >
                 📋 Copiar URL de Rastreamento
+              </button>
+              <button
+                onClick={() => deleteQRCode(selectedQR.qr_id)}
+                className={styles.deleteBtn}
+                disabled={isDeleting}
+              >
+                {isDeleting ? "🗑️ Deletando..." : "🗑️ Deletar QR Code"}
               </button>
               <button
                 onClick={() => setSelectedQR(null)}
