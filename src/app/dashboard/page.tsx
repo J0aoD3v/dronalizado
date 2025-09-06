@@ -28,19 +28,51 @@ export default function DashboardPage() {
 
   const loadDashboardData = async () => {
     try {
+      setIsLoading(true);
+      
       // Carregar estatísticas
+      console.log("Carregando estatísticas...");
       const statsResponse = await fetch("/api/stats/realtime");
-      const statsData = await statsResponse.json();
-      setStats(statsData);
+      
+      if (statsResponse.ok) {
+        const statsData = await statsResponse.json();
+        console.log("Estatísticas carregadas:", statsData);
+        setStats(statsData);
+      } else {
+        console.error("Erro ao carregar estatísticas:", statsResponse.status);
+        // Definir valores padrão
+        setStats({
+          totalScans: 0,
+          todayScans: 0,
+          uniqueVisitors: 0,
+          activeQRCodes: 0,
+        });
+      }
 
       // Carregar QR codes
+      console.log("Carregando QR codes...");
       const qrResponse = await fetch("/api/stats/qr-codes");
-      const qrData = await qrResponse.json();
-      setQrCodes(qrData.data || []);
+      
+      if (qrResponse.ok) {
+        const qrData = await qrResponse.json();
+        console.log("QR codes carregados:", qrData);
+        setQrCodes(qrData.data || []);
+      } else {
+        console.error("Erro ao carregar QR codes:", qrResponse.status);
+        setQrCodes([]);
+      }
 
-      setIsLoading(false);
     } catch (error) {
       console.error("Erro ao carregar dados:", error);
+      // Definir valores padrão em caso de erro
+      setStats({
+        totalScans: 0,
+        todayScans: 0,
+        uniqueVisitors: 0,
+        activeQRCodes: 0,
+      });
+      setQrCodes([]);
+    } finally {
       setIsLoading(false);
     }
   };

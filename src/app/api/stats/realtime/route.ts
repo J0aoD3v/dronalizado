@@ -3,36 +3,54 @@ import { database } from "@/lib/mongodb";
 
 export async function GET() {
   try {
+    // Tentar conectar ao database
+    await database.connect();
+    
+    // Atualizar estatísticas
     await database.updateStats();
     const stats = await database.getStats();
 
-    const uniqueVisitors = await database
-      .getQRScansCollection()
-      .aggregate([
-        {
-          $group: {
-            _id: "$ip_address",
+    // Buscar visitantes únicos
+    let uniqueCount = 0;
+    try {
+      const uniqueVisitors = await database
+        .getQRScansCollection()
+        .aggregate([
+          {
+            $group: {
+              _id: "$ip_address",
+            },
           },
-        },
-        {
-          $count: "count",
-        },
-      ])
-      .toArray();
+          {
+            $count: "count",
+          },
+        ])
+        .toArray();
 
-    const uniqueCount = uniqueVisitors.length > 0 ? uniqueVisitors[0].count : 0;
+      uniqueCount = uniqueVisitors.length > 0 ? uniqueVisitors[0].count : 0;
+    } catch (uniqueError) {
+      console.warn("Erro ao buscar visitantes únicos:", uniqueError);
+    }
 
-    return NextResponse.json({
+    const response = {
       totalScans: stats?.total_scans || 0,
       todayScans: stats?.today_scans || 0,
       uniqueVisitors: uniqueCount,
       activeQRCodes: stats?.total_qr_codes || 0,
-    });
+    };
+
+    console.log("Estatísticas retornadas:", response);
+
+    return NextResponse.json(response);
   } catch (error) {
     console.error("Erro ao buscar estatísticas:", error);
-    return NextResponse.json(
-      { error: "Erro interno do servidor" },
-      { status: 500 }
-    );
+    
+    // Retornar dados padrão em caso de erro
+    return NextResponse.json({
+      totalScans: 0,
+      todayScans: 0,
+      uniqueVisitors: 0,
+      activeQRCodes: 0,
+    });
   }
 }

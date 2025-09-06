@@ -64,8 +64,13 @@ class MongoDatabase {
         throw new Error("MONGODB_URI não encontrada nas variáveis de ambiente");
       }
 
+      console.log("🔗 Tentando conectar ao MongoDB...");
       client = new MongoClient(uri);
       await client.connect();
+      
+      // Testar a conexão
+      await client.db("admin").command({ ping: 1 });
+      
       db = client.db(dbName);
 
       // Criar índices para melhor performance
@@ -75,7 +80,21 @@ class MongoDatabase {
       console.log("✅ Conectado ao MongoDB - Database:", dbName);
     } catch (error) {
       console.error("❌ Erro ao conectar no MongoDB:", error);
+      this.connected = false;
       throw error;
+    }
+  }
+
+  async isConnected(): Promise<boolean> {
+    if (!this.connected || !client) return false;
+    
+    try {
+      await client.db("admin").command({ ping: 1 });
+      return true;
+    } catch {
+      console.warn("⚠️ Conexão perdida com MongoDB");
+      this.connected = false;
+      return false;
     }
   }
 

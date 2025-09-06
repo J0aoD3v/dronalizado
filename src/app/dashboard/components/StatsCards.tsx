@@ -22,25 +22,25 @@ export default function StatsCards({ stats }: StatsCardsProps) {
   const cards = [
     {
       title: "Total de Scans",
-      value: stats.totalScans,
+      value: stats.totalScans || 0,
       icon: "📊",
       color: "#667eea",
     },
     {
       title: "Scans Hoje",
-      value: stats.todayScans,
+      value: stats.todayScans || 0,
       icon: "📅",
       color: "#764ba2",
     },
     {
       title: "Visitantes Únicos",
-      value: stats.uniqueVisitors,
+      value: stats.uniqueVisitors || 0,
       icon: "👥",
       color: "#f093fb",
     },
     {
       title: "QR Codes Ativos",
-      value: stats.activeQRCodes,
+      value: stats.activeQRCodes || 0,
       icon: "🔗",
       color: "#4facfe",
     },
@@ -57,7 +57,9 @@ export default function StatsCards({ stats }: StatsCardsProps) {
           <div className={styles.statIcon}>{card.icon}</div>
           <div className={styles.statContent}>
             <h3>{card.title}</h3>
-            <p className={styles.statValue}>{card.value.toLocaleString()}</p>
+            <p className={styles.statValue}>
+              {typeof card.value === 'number' ? card.value.toLocaleString() : '0'}
+            </p>
           </div>
         </div>
       ))}
