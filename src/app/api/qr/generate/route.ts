@@ -5,6 +5,9 @@ import { database } from "@/lib/mongodb";
 
 export async function POST(request: NextRequest) {
   try {
+    // Garantir conexão com o database
+    await database.connect();
+    
     const { name, url } = await request.json();
 
     if (!name || !url) {
@@ -14,12 +17,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log("Gerando QR code para:", { name, url });
+
     // Verificar se já existe QR para esta URL
     const existingQr = await database.getQRCodesCollection().findOne({
       url: url,
     });
 
     if (existingQr) {
+      console.log("QR code já existe:", existingQr.id);
+      
       const qrCodeDataURL = await QRCode.toDataURL(url, {
         width: 300,
         margin: 2,
@@ -38,6 +45,7 @@ export async function POST(request: NextRequest) {
 
     // Criar novo QR code
     const qrId = uuidv4();
+    console.log("Criando novo QR code:", qrId);
 
     const qrCodeDataURL = await QRCode.toDataURL(url, {
       width: 300,
@@ -55,6 +63,7 @@ export async function POST(request: NextRequest) {
     };
 
     await database.createQRCode(qrCode);
+    console.log("QR code criado com sucesso:", qrId);
 
     return NextResponse.json({
       success: true,
@@ -67,7 +76,10 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Erro ao gerar QR code:", error);
     return NextResponse.json(
-      { error: "Erro interno do servidor" },
+      { 
+        success: false,
+        error: "Erro interno do servidor" 
+      },
       { status: 500 }
     );
   }

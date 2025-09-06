@@ -7,7 +7,11 @@ export async function GET(
   { params }: { params: Promise<{ qrId: string }> }
 ) {
   try {
+    // Garantir conexão com o database
+    await database.connect();
+    
     const { qrId } = await params;
+    console.log("Rastreando QR code:", qrId);
 
     // Extrair informações da requisição
     const ip =
@@ -20,11 +24,14 @@ export async function GET(
     const qrCode = await database.getQRCodeById(qrId);
 
     if (!qrCode) {
+      console.log("QR Code não encontrado:", qrId);
       return NextResponse.json(
         { error: "QR Code não encontrado" },
         { status: 404 }
       );
     }
+
+    console.log("QR Code encontrado, registrando scan...");
 
     // Registrar o scan
     const scan = {
@@ -39,6 +46,8 @@ export async function GET(
 
     // Atualizar contador de scans
     await database.updateQRCodeScanCount(qrId);
+
+    console.log("Scan registrado, redirecionando para:", qrCode.url);
 
     // Redirecionar para a URL
     return NextResponse.redirect(qrCode.url);
