@@ -9,9 +9,9 @@ const HeroSection = ({ onClickForm }: { onClickForm?: () => void }) => {
       <div className="absolute inset-0 bg-black opacity-40"></div>
 
       {/* Conteúdo */}
-      <div className="relative z-10 p-8 max-w-3xl">
-        {/* Espaço reservado para logo, se necessário */}
-        {/* <Image src="/images/1.jpg" alt="Logo Dronalizado" width={200} height={200} /> */}
+      <div className="relative z-10 p-8 max-w-3xl flex flex-col items-center">
+        {/* Logo principal */}
+        <img src="/images/logo.png" alt="Logo Dronalizado" width={120} height={120} style={{ marginBottom: 24 }} />
 
         <h1 className="hero-title font-bold text-white mb-4">
           Mapeamento Agrícola de Precisão. <br />

@@ -8,7 +8,9 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          {/* Logo no rodapé */}
+          <img src="/images/logo.png" alt="Logo Dronalizado" width={60} height={60} style={{ marginBottom: 8 }} />
           <p className="mt-4 text-sm" style={{ fontSize: "1.6rem" }}>
             © {currentYear} DRONALIZADO. Todos os direitos reservados.
           </p>
