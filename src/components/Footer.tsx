@@ -17,13 +17,23 @@ const Footer = () => {
           }}
         >
           {/* Logo no rodapé */}
-          <Image
-            src="/images/logo.png"
-            alt="Logo Dronalizado"
-            width={60}
-            height={60}
-            style={{ marginBottom: 8 }}
-          />
+          <div
+            className="inline-block"
+            style={{
+              backgroundColor: "rgba(255, 255, 255, 0.2)",
+              padding: "1.5vw",
+              borderRadius: "0.75rem",
+              width: "30vw",
+            }}
+          >
+            <Image
+              src="/images/logo.png"
+              alt="Logo Dronalizado"
+              width={500}
+              height={200}
+              style={{ width: "100%", height: "auto" }}
+            />
+          </div>
           <p className="mt-4 text-sm" style={{ fontSize: "1.6rem" }}>
             © {currentYear} DRONALIZADO. Todos os direitos reservados.
           </p>
