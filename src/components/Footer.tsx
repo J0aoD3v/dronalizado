@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -16,7 +17,7 @@ const Footer = () => {
           }}
         >
           {/* Logo no rodapé */}
-          <img
+          <Image
             src="/images/logo.png"
             alt="Logo Dronalizado"
             width={60}

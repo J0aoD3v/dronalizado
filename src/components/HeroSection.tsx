@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 const HeroSection = ({ onClickForm }: { onClickForm?: () => void }) => {
   return (
@@ -11,7 +12,7 @@ const HeroSection = ({ onClickForm }: { onClickForm?: () => void }) => {
       {/* Conteúdo */}
       <div className="relative z-10 p-8 max-w-3xl flex flex-col items-center">
         {/* Logo principal */}
-        <img
+        <Image
           src="/images/logo.png"
           alt="Logo Dronalizado"
           width={120}
