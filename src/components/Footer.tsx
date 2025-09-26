@@ -43,7 +43,7 @@ const Footer = () => {
           >
             <p>Bandeirantes - PR e região</p>
             <p>(43) 99181-9073</p>
-            <p>belchior.julia12@gmail.com</p>
+            <p>belchior.drones@gmail.com</p>
           </div>
         </div>
       </div>

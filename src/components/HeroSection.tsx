@@ -18,7 +18,7 @@ const HeroSection = ({ onClickForm }: { onClickForm?: () => void }) => {
             backgroundColor: "rgba(255, 255, 255, 0.2)",
             padding: "1.5vw",
             borderRadius: "1rem",
-            width: "30vw",
+            width: "40vw",
           }}
         >
           <Image
