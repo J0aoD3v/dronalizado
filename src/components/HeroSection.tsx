@@ -5,37 +5,27 @@ import Image from "next/image";
 
 const HeroSection = ({ onClickForm }: { onClickForm?: () => void }) => {
   return (
-    <section className="relative h-screen flex items-center justify-center text-center bg-cover bg-center bg-[url('/images/11.jpg')]">
-      {/* Overlay escuro */}
-      <div className="absolute inset-0 bg-black opacity-40"></div>
-
-      {/* Conteúdo */}
-      <div className="relative z-10 p-8 max-w-3xl flex flex-col items-center">
-        {/* Logo principal */}
-        <div
-          className="mb-6"
-          style={{
-            backgroundColor: "rgba(255, 255, 255, 0.2)",
-            padding: "1.5vw",
-            borderRadius: "1rem",
-            width: "40vw",
-          }}
-        >
+    <section className="w-full">
+      {/* Área da logo com fundo branco */}
+      <div className="w-full h-screen">
+        <div className="relative w-full h-full">
           <Image
-            src="/images/logo.png"
+            src="/images/logo_branco.jpg"
             alt="Logo Dronalizado"
-            width={500}
-            height={200}
-            style={{ width: "100%", height: "auto" }}
-            className="object-contain"
+            fill
+            priority
+            className="object-cover"
           />
         </div>
+      </div>
 
-        <h1 className="hero-title font-bold text-white mb-4">
+      {/* Texto aparece somente ao rolar para baixo */}
+      <div className="relative z-10 p-8 max-w-3xl mx-auto text-center mt-16">
+        <h1 className="hero-title font-bold text-gray-900 mb-4">
           Mapeamento Agrícola de Precisão. <br />
-          <span className="text-green-400">O Seu Jeito, No Seu Drone!</span>
+          <span className="text-green-600">O Seu Jeito, No Seu Drone!</span>
         </h1>
-        <p className="hero-desc text-white mb-8">
+        <p className="hero-desc text-gray-700 mb-8">
           Serviços inteligentes de mapeamento para otimizar seu tempo. Descubra
           o SEU potencial.
         </p>
