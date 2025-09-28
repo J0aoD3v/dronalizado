@@ -1,5 +1,5 @@
 // src/components/MainForm.tsx
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 
 const MainForm = () => {
   // URL do Google Forms fornecido diretamente
@@ -15,21 +15,6 @@ const MainForm = () => {
     : "Em breve, você poderá se cadastrar aqui. Por enquanto, entre em contato pelo email ou telefone para mais informações.";
 
   const [showForm, setShowForm] = useState(false);
-  const [isFormLoading, setIsFormLoading] = useState(false);
-
-  const handleOpenForm = useCallback(() => {
-    setIsFormLoading(true);
-    setShowForm(true);
-  }, []);
-
-  const handleCloseForm = useCallback(() => {
-    setShowForm(false);
-    setIsFormLoading(false);
-  }, []);
-
-  const handleIframeLoad = useCallback(() => {
-    setIsFormLoading(false);
-  }, []);
 
   return (
     <section id="form-section" className="mainform-section">
@@ -37,7 +22,10 @@ const MainForm = () => {
         <h2 className="mainform-title">{title}</h2>
         <p className="mainform-paragraph">{description}</p>
         {!showForm && (
-          <button className="mainform-open-btn" onClick={handleOpenForm}>
+          <button
+            className="mainform-open-btn"
+            onClick={() => setShowForm(true)}
+          >
             Abrir Formulário
           </button>
         )}
@@ -45,7 +33,7 @@ const MainForm = () => {
           <div className="mainform-box" style={{ position: "relative" }}>
             <button
               className="mainform-close-btn"
-              onClick={handleCloseForm}
+              onClick={() => setShowForm(false)}
               aria-label="Fechar formulário"
               style={{
                 position: "absolute",
@@ -69,22 +57,6 @@ const MainForm = () => {
             >
               ×
             </button>
-            {isFormLoading && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  zIndex: 5,
-                  background: "rgba(255,255,255,0.9)",
-                  padding: "20px",
-                  borderRadius: "8px",
-                }}
-              >
-                Carregando formulário...
-              </div>
-            )}
             {googleFormUrl ? (
               <div className="mainform-iframe-wrapper">
                 <iframe
@@ -92,8 +64,6 @@ const MainForm = () => {
                   title="Formulário Dronalizado"
                   className="mainform-iframe"
                   allowFullScreen
-                  onLoad={handleIframeLoad}
-                  loading="lazy"
                 >
                   Carregando formulário...
                 </iframe>
