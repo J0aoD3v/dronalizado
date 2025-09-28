@@ -1,7 +1,6 @@
 /* src/styles/globals.css */
 
-/* Import de fontes */
-@import url("https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap");
+/* Import apenas dos ícones Material, pois a fonte Onest agora vem do Next.js */
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100&display=swap");
 
 /* Tailwind base, componentes e utilidades */
@@ -34,7 +33,7 @@
    Reset e estilos globais
 ======================= */
 body {
-  font-family: "Onest", Arial, Helvetica, sans-serif;
+  font-family: var(--font-onest), Arial, Helvetica, sans-serif;
   font-weight: bold;
   margin: 0;
   padding: 0;
