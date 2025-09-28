@@ -23,7 +23,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className={`${onest.variable} font-onest`} suppressHydrationWarning={true}>
+      <body
+        className={`${onest.variable} font-onest`}
+        suppressHydrationWarning={true}
+      >
         {children}
       </body>
     </html>
