@@ -183,6 +183,11 @@ a.button:focus {
 /* =======================
    Hero Section
 ======================= */
+.hero-logo-section {
+  background: #ffffff;
+  color: #171717;
+}
+
 .hero-title {
   font-size: 4rem;
   line-height: 1.1;
